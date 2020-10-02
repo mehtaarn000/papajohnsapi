@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options as _chrome_options
 from selenium.webdriver.firefox.options import Options
 
-def browser(user_browser, headless):
+def __browser__(user_browser, headless):
     global driver
     chrome_options = _chrome_options()
     chrome_options.add_argument("--headless")
