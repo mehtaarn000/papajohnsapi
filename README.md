@@ -5,7 +5,7 @@ A Python module that will allow users to use selenium to order pizza from Papa J
 `pip install selenium`
 If you are using the Chrome Browser, download the compatible version of the chromedriver [here](https://chromedriver.chromium.org/).
 If you are using the Firefox Browser, download the compatible version of the geckodriver [here](https://github.com/mozilla/geckodriver/releases).
-On OSX make sure to move either of these drivers to /usr/local/bin with either:
+On OSX make sure to move either of these drivers to `/usr/local/bin` with either:
 `mv geckodriver /usr/local/bin`
 or 
 `mv chromedriver /usr/local/bin`
