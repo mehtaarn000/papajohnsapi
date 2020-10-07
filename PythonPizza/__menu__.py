@@ -1,11 +1,5 @@
 from __errors__ import InvalidMenuOption
 def __menu__(item):
-    """Locate food and drink items on menu, and their order codes.
-    Options:
-    'Pizza',
-    'Drinks',
-    'Deserts',
-    'Sides'"""
     if item == "Pizza":
         print('PEP = Pepperoni Pizza\nSAU = Sausage Pizza\nMCP = Medium Cheese Pizza\nCP = Cheese Pizza\nSH = Super Hawaiian Pizza\nGF = Garden Fresh Pizza\nFSTA = Fresh Spinach & Tomato Alfred Pizza')
     elif item == "Drinks":
@@ -13,6 +7,6 @@ def __menu__(item):
     elif item == "Deserts":
         print('CPA = Cinnamon Pull Aparts\nCCC = Chocolate Chip Cookie\nDCCB = Chocolate Chip Brownie')
     elif item == "Sides":
-        print('')
+        print("")
     else:
         raise InvalidMenuOption('Searched item is not a Papa Johns menu item.')

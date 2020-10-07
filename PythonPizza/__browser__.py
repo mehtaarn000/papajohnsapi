@@ -32,5 +32,5 @@ def __browser__(user_browser, headless):
             driver = webdriver.Edge()
 
     else:
-        pass
+        raise BrowserError('Invalid browser')
     return driver
