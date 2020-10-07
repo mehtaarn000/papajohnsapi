@@ -14,30 +14,49 @@ from __order__ import __order__
 #from __search__ import __search__
 #from __coupons__ import __coupons__
 #from __special_instructions__ import __special_instructions__
-global _cash
+
 def browser(user_browser, headless):
+    """Specifies selenium browser from the following choices:
+    'Chrome',
+    'Firefox',
+    'Edge'"""
     global driver
     driver = __browser__(user_browser, headless)
     return driver
 
 def menu(item):
+    """Locate food and drink items on menu, and their order codes.
+    Options:
+    'Pizza',
+    'Drinks',
+    'Deserts',
+    'Sides'"""
     __menu__(item)
 
-def credit_card(credit_card_number, name_on_card, exp_month, exp_year, security_code):
-    global _credit_card_number, _name_on_card, _exp_month, _exp_year, _security_code
-    global _cash
-    _cash = False
-    _credit_card_number = credit_card_number
-    _name_on_card = name_on_card
-    _exp_month = exp_month
-    _exp_year = exp_year
-    _security_code = security_code
-
-def cash():
-    global _cash
-    _cash = True
+def credit_card(*args, **kwargs):
+    """Confirm payment method
+    If cash, then 'cash=True'
+    If credit card, then:
+    provide credit card number, 
+    name on card, 
+    expiration month, 
+    expiration year, 
+    and security code"""
+    global _credit_card_number, _name_on_card, _exp_month, _exp_year, _security_code, _cash
+    _cash = kwargs.get('cash', None)
+    _credit_card_number = kwargs.get('credit_card_number', None)
+    _name_on_card = kwargs.get('name_on_card', None)
+    _exp_month = kwargs.get('exp_month', None)
+    _exp_year = kwargs.get('exp_year', None)
+    _security_code = kwargs.get('security_code', None)
 
 def address(number, street, city, state, zipcode):
+    """Input address:
+    House number,
+    Street,
+    City,
+    State,
+    Zipcode"""
     global _number, _street, _city, _state, _zipcode
     _number = number
     _street = street
@@ -46,6 +65,11 @@ def address(number, street, city, state, zipcode):
     _zipcode = zipcode
 
 def user(first_name, last_name, phone_number, email):
+    """Input information about the user:
+    First name,
+    Last name,
+    Phone Number,
+    Email"""
     global _first_name, _last_name, _phone_number, _email
     _first_name = first_name
     _last_name = last_name
@@ -54,8 +78,10 @@ def user(first_name, last_name, phone_number, email):
 
 
 def order(user_order):
-    if True == True:
+    """Provide the items off the menu that the user will order. Refer to item codes.
+    Must be type list."""
+    if _cash:
         __order__(user_order, driver, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, cash_option=True)
-    #elif _cash == False:
-    #    __order__(user_order, driver, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, credit_number=_credit_card_number, name_on_card=_name_on_card, exp_month=_exp_month, exp_year=_exp_year, sec_code=_security_code)
+    else:
+        __order__(user_order, driver, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, credit_number=_credit_card_number, name_on_card=_name_on_card, exp_month=_exp_month, exp_year=_exp_year, sec_code=_security_code)
     
