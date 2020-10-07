@@ -14,23 +14,18 @@ def __browser__(user_browser, headless):
     if user_browser == 'Chrome':
         if headless == True:
             driver = webdriver.Chrome(options=chrome_options)
-
         else:
             driver = webdriver.Chrome()
-
     if user_browser == 'Firefox':
         if headless == True:
             driver = webdriver.Firefox(options=fireFoxOptions)
-
         else:
             driver = webdriver.Firefox()
-
     if user_browser == 'Edge':
         if headless == True:
             raise Exception('Selenium driver cannot be headless and Edge.')
         else:
             driver = webdriver.Edge()
-
     else:
         raise BrowserError('Invalid browser')
     return driver
