@@ -6,38 +6,14 @@ from selenium.webdriver.chrome.options import Options as _chrome_options
 from selenium.webdriver.firefox.options import Options
 from time import sleep
 
-#Local modules
-from __order__ import __order__
-#from __search__ import __search__
-#from __coupons__ import __coupons__
-#from __special_instructions__ import __special_instructions__
-
 def browser(user_browser, headless):
     """Specifies selenium browser from the following choices:
     'Chrome',
     'Firefox',
     'Edge'"""
-    global driver
-    chrome_options = _chrome_options()
-    chrome_options.add_argument("--headless")
-    fireFoxOptions = Options()
-    fireFoxOptions.headless = True
-    if user_browser == 'Chrome':
-        if headless == True:
-            driver = webdriver.Chrome(options=chrome_options)
-        else:
-            driver = webdriver.Chrome()
-    if user_browser == 'Firefox':
-        if headless == True:
-            driver = webdriver.Firefox(options=fireFoxOptions)
-        else:
-            driver = webdriver.Firefox()
-    if user_browser == 'Edge':
-        if headless == True:
-            raise Exception('Selenium driver cannot be headless and Edge.')
-        else:
-            driver = webdriver.Edge()
-    return driver
+    global _headless, driver
+    _headless = headless
+    driver = user_browser
 
 
 def menu(item):
@@ -55,6 +31,7 @@ def menu(item):
         else:
             raise InvalidMenuOption('Searched item is not a Papa Johns menu item.')
     __menu__(item)
+
 def payment(*args, **kwargs):
     """Confirm payment method
     If cash, then 'cash=True'
@@ -100,7 +77,7 @@ def user(first_name, last_name, phone_number, email):
 
 
 def order(user_order):
-    def __order__(user_order, driver, real_number, real_street, real_city, real_state, real_zipcode, _first_name, _last_name, _email, _phonenum, *args, **kwargs):
+    def __order__(user_order, user_driver, headless, real_number, real_street, real_city, real_state, real_zipcode, _first_name, _last_name, _email, _phonenum, *args, **kwargs):
         credit_number = kwargs.get('credit_number', None)
         name_on_card = kwargs.get('name_on_card', None)
         exp_month = kwargs.get('exp_month', None)
@@ -111,7 +88,25 @@ def order(user_order):
         if type_of_user_order != "<class 'list'>":
             raise TypeError('Your order must be a list.')
         else:
-            driver = webdriver.Firefox()
+            chrome_options = _chrome_options()
+            chrome_options.add_argument("--headless")
+            fireFoxOptions = Options()
+            fireFoxOptions.headless = True
+            if user_driver == 'Chrome':
+                if headless == True:
+                    driver = webdriver.Chrome(options=chrome_options)
+                else:
+                    driver = webdriver.Chrome()
+            if user_driver == 'Firefox':
+                if headless == True:
+                    driver = webdriver.Firefox(options=fireFoxOptions)
+                else:
+                    driver = webdriver.Firefox()
+            if user_driver == 'Edge':
+                if headless == True:
+                    raise Exception('Selenium driver cannot be headless and Edge.')
+                else:
+                    driver = webdriver.Edge()
             driver.get("https://www.papajohns.com/")
             order_button = driver.find_element_by_class_name('nav-main-link')
             order_button.click()
@@ -235,8 +230,11 @@ def order(user_order):
                 driver.close()
     """Provide the items off the menu that the user will order. Refer to item codes.
     Order be type list."""
-    if _cash:
-        __order__(user_order, driver, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, cash_option=True)
-    else:
-        __order__(user_order, driver, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, credit_number=_credit_card_number, name_on_card=_name_on_card, exp_month=_exp_month, exp_year=_exp_year, sec_code=_security_code)
-
+    if _cash and _headless:
+        __order__(user_order, driver, True, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, cash_option=True)
+    elif _cash and not _headless:
+        __order__(user_order, driver, False, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, cash_option=True)
+    elif not _cash and _headless:
+         __order__(user_order, driver, True, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, credit_number=_credit_card_number, name_on_card=_name_on_card, exp_month=_exp_month, exp_year=_exp_year, sec_code=_security_code)
+    elif not _cash and not _headless:
+        __order__(user_order, driver, False, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, credit_number=_credit_card_number, name_on_card=_name_on_card, exp_month=_exp_month, exp_year=_exp_year, sec_code=_security_code)
