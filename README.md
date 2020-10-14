@@ -1,4 +1,4 @@
-# pythonpizza
+# papajohnsapi
 A Python module that will allow users to use selenium to order pizza from Papa Johns.
 
 ## Requirements
