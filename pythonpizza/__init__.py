@@ -7,9 +7,9 @@ from selenium.webdriver.firefox.options import Options
 from time import sleep
 
 #Local modules
-from utils.__browser__ import __browser__
-from utils.__menu__ import __menu__
-from utils.__order__ import __order__
+from __browser__ import __browser__
+from __menu__ import __menu__
+from __order__ import __order__
 #from __search__ import __search__
 #from __coupons__ import __coupons__
 #from __special_instructions__ import __special_instructions__
@@ -20,8 +20,27 @@ def browser(user_browser, headless):
     'Firefox',
     'Edge'"""
     global driver
-    driver = __browser__(user_browser, headless)
+    chrome_options = _chrome_options()
+    chrome_options.add_argument("--headless")
+    fireFoxOptions = Options()
+    fireFoxOptions.headless = True
+    if user_browser == 'Chrome':
+        if headless == True:
+            driver = webdriver.Chrome(options=chrome_options)
+        else:
+            driver = webdriver.Chrome()
+    if user_browser == 'Firefox':
+        if headless == True:
+            driver = webdriver.Firefox(options=fireFoxOptions)
+        else:
+            driver = webdriver.Firefox()
+    if user_browser == 'Edge':
+        if headless == True:
+            raise Exception('Selenium driver cannot be headless and Edge.')
+        else:
+            driver = webdriver.Edge()
     return driver
+
 
 def menu(item):
     """Locate food and drink items on menu, and their order codes.
@@ -83,4 +102,4 @@ def order(user_order):
         __order__(user_order, driver, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, cash_option=True)
     else:
         __order__(user_order, driver, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, credit_number=_credit_card_number, name_on_card=_name_on_card, exp_month=_exp_month, exp_year=_exp_year, sec_code=_security_code)
-    
+

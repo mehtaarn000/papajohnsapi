@@ -1,4 +1,9 @@
 .DS_Store
-/__pycache__/
+__pycache__/
 geckodriver.log
 example.py
+dist/
+build/
+pythonpizza.egg-info/
+venv/
+setup.py
