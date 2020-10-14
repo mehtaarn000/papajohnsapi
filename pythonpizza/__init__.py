@@ -234,7 +234,7 @@ def order(user_order):
                 checkoutbutton.click()
                 driver.close()
     """Provide the items off the menu that the user will order. Refer to item codes.
-    Must be type list."""
+    Order be type list."""
     if _cash:
         __order__(user_order, driver, _number, _street, _city, _state, _zipcode, _first_name, _last_name, _email, _phone_number, cash_option=True)
     else:
