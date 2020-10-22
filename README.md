@@ -16,6 +16,8 @@ or
 `mv chromedriver /usr/local/bin`
 
 ## Installation
+To Install:
+
 `pip install papajohnsapi-mehtaarn000`
 
 ## Usage
@@ -26,7 +28,7 @@ Check the menu with:
 `pizza.menu(item)`
 This item can be: 'Pizza', 'Drinks', 'Sides', or 'Desserts'
 (Currently you can only order pizza)
-Replace Arguments as needed
+Replace Arguments as needed.
 
 Specify your choice of browser and the choice of going headless (You won't see a browser window) with:
 `pizza.browser('Firefox', headless=False)`
